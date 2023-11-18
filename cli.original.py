@@ -4,7 +4,6 @@ import argparse
 from datetime import datetime
 
 import settings
-import pandas as pd
 from quiniela import models, io
 
 
@@ -85,27 +84,11 @@ if __name__ == "__main__":
         print(f"Model succesfully trained and saved in {settings.MODELS_PATH / args.model_name}")
     if args.task == "predict":
         logging.info(f"Predicting matchday {args.matchday} in season {args.season}, division {args.division}")
-        
         model = models.QuinielaModel.load(settings.MODELS_PATH / args.model_name)
-        
         predict_data = io.load_matchday(args.season, args.division, args.matchday)
-    
         predict_data["pred"] = model.predict(predict_data)
-                
         print(f"Matchday {args.matchday} - LaLiga - Division {args.division} - Season {args.season}")
         print("=" * 70)
-        
         for _, row in predict_data.iterrows():
             print(f"{row['home_team']:^30s} vs {row['away_team']:^30s} --> {row['pred']}")
-        
-        df = predict_data
-        # Calculate the 'season' column (modify this according to your actual calculation logic)
-        df['season'] = df['season_start'] + df['season_since_start']
-
-        # List of columns to keep
-        columns_to_keep = ['home_team', 'away_team', 'division', 'matchday', 'season']
-
-        # Drop all other columns
-        df = df[columns_to_keep]
-        
-        io.save_predictions(df)
+        io.save_predictions(predict_data)
