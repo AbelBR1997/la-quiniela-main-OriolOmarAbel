@@ -1,6 +1,6 @@
 ## LaQuiniela of LaLiga
 
-Team members: XXX - XXX -XXX
+Team members: Oriol Balló Gimbernat (1689267) - Omar Anoud Blanco (1692423) - Abel Beltran Romay (1602686)
 
 This repo contains the skeleton for you to build your first ML project. Use the data in ```laliga.sqlite``` to build a ML model that predicts the outcome of a matchday in LaLiga (Spanish Football League).
 
